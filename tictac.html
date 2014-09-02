@@ -1,0 +1,120 @@
+<!DOCTYPE>
+<html>
+<head>
+	<title>Tic Tac game</title>
+	<STYLE TYPE="text/css">
+		table{
+			min-width: 302px;
+			min-height: 300px;
+			font-size: 5.5em;
+			text-align: center;
+			font-family: cursive;
+		}
+		table a{
+			text-decoration: none;
+			color: black;
+		}
+		td:hover{
+			cursor: pointer;
+		}
+		td{
+			width: 101px;
+			height: 128px;
+		}
+	</STYLE>
+
+</head>
+<body>
+	<div id="wrapper">
+		<table border="1">
+			<tbody>
+				<tr>
+					<td id="11" onclick="clicked('11')"></td>
+					<td id="12" onclick="clicked('12')"></td>
+					<td id="13" onclick="clicked('13')"></td>
+				</tr>
+				<tr>
+					<td id="21" onclick="clicked('21')"></td>
+					<td id="22" onclick="clicked('22')"></td>
+					<td id="23" onclick="clicked('23')"></td>
+				</tr>
+				<tr>
+					<td id="31" onclick="clicked('31')"></td>
+					<td id="32" onclick="clicked('32')"></td>
+					<td id="33" onclick="clicked('33')"></td>
+				</tr>
+			</tbody>
+		</table>
+
+<script>
+var player = 1;
+function clicked(id){
+	var tdElem = document.getElementById ( id );
+	var tdText = tdElem.textContent;
+	var trimed = tdText.trim();
+
+	if (trimed.length<1) {
+		if (player == 1) {
+			var char = "O";
+			player++;
+		}else if (player == 2){
+			var char = "X";
+			player--;
+		}
+		document.getElementById(id).innerHTML = char;
+		var helpId = id;
+		var secondDig = helpId % 10;
+		helpId = helpId / 10;
+		var firstDig = parseInt(helpId) % 10;
+		if (id =='12' || id == '21' || id == '23' || id == '32' || id == '22') {
+
+			isCurrect(firstDig, secondDig, firstDig+''+1, firstDig+''+2, firstDig+''+3);
+			isCurrect(firstDig, secondDig, 1+''+secondDig, 2+''+secondDig, 3+''+secondDig);
+		};
+		if (id =='11' || id == '33' || id == '22') {
+			isCurrect(firstDig, secondDig, firstDig+''+1, firstDig+''+2, firstDig+''+3);
+			isCurrect(firstDig, secondDig, 1+''+secondDig, 2+''+secondDig, 3+''+secondDig);
+			isCurrect(firstDig, secondDig, '11', '22', '33');
+		}
+		if (id =='13' || id == '31' || id == '22') {
+			isCurrect(firstDig, secondDig, firstDig+''+1, firstDig+''+2, firstDig+''+3);
+			isCurrect(firstDig, secondDig, 1+''+secondDig, 2+''+secondDig, 3+''+secondDig);
+			isCurrect(firstDig, secondDig, '13', '22', '31');
+		}
+
+	}else{
+		//notEmpty
+	}
+
+}
+function isCurrect(firstDig, secondDig, fstID, scndID, thrdID){
+	var firstElem = document.getElementById ( fstID );
+	var firstChar = firstElem.textContent;
+
+	var secondElem = document.getElementById ( scndID );
+	var secondChar = secondElem.textContent;
+
+	var thirdElem = document.getElementById ( thrdID );
+	var thirdChar = thirdElem.textContent;
+
+	if (firstChar!="" && secondChar!="" && thirdChar!="") {
+		if(firstChar==secondChar && thirdChar==secondChar){
+			changeColor( fstID );
+			changeColor( scndID );
+			changeColor( thrdID );
+		}
+	}
+}
+
+function changeColor(id) {
+    document.getElementById(id).style.color = "green";
+    for (var i = 1; i < 4; i++) {
+	      for (var j = 1; j < 4; j++) {
+	      	document.getElementById(i+''+j).onclick='';
+	     };
+     };
+}
+</script>
+	</div>
+</body>
+</html>
