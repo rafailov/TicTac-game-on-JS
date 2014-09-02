@@ -47,27 +47,32 @@
 		</table>
 
 <script>
+//value for player
 var player = 1;
+var endLoop=false;
 function clicked(id){
+	//get element from <td> and trim the result
 	var tdElem = document.getElementById ( id );
 	var tdText = tdElem.textContent;
 	var trimed = tdText.trim();
-
+	//if text content is ""
 	if (trimed.length<1) {
 		if (player == 1) {
 			var char = "O";
-			player++;
+			player++;//next player
 		}else if (player == 2){
 			var char = "X";
-			player--;
+			player--;//next player
 		}
+		//set our char ("X" or "O")
 		document.getElementById(id).innerHTML = char;
+		//get first and second digit from id (firstDig and secondDig)
 		var helpId = id;
 		var secondDig = helpId % 10;
 		helpId = helpId / 10;
 		var firstDig = parseInt(helpId) % 10;
-		if (id =='12' || id == '21' || id == '23' || id == '32' || id == '22') {
 
+		if (id =='12' || id == '21' || id == '23' || id == '32' || id == '22') {
 			isCurrect(firstDig, secondDig, firstDig+''+1, firstDig+''+2, firstDig+''+3);
 			isCurrect(firstDig, secondDig, 1+''+secondDig, 2+''+secondDig, 3+''+secondDig);
 		};
@@ -83,36 +88,43 @@ function clicked(id){
 		}
 
 	}else{
-		//notEmpty
+		//clicked box is not Empty (we don`t need to do anything)
 	}
 
 }
-function isCurrect(firstDig, secondDig, fstID, scndID, thrdID){
+//function if the given boxes are equal
+function isCurrect(firstDig, secondDig, fstID, sndID, trdID){
+	//get char from first box
 	var firstElem = document.getElementById ( fstID );
 	var firstChar = firstElem.textContent;
-
-	var secondElem = document.getElementById ( scndID );
+	//get char from second box
+	var secondElem = document.getElementById ( sndID );
 	var secondChar = secondElem.textContent;
-
-	var thirdElem = document.getElementById ( thrdID );
+	//get char from third box
+	var thirdElem = document.getElementById ( trdID );
 	var thirdChar = thirdElem.textContent;
-
+	//if none is empty and if the given boxes are equal, change box`s color and stopped listening for click
 	if (firstChar!="" && secondChar!="" && thirdChar!="") {
 		if(firstChar==secondChar && thirdChar==secondChar){
-			changeColor( fstID );
-			changeColor( scndID );
-			changeColor( thrdID );
+			changeColor( fstID, sndID, trdID);
+			changeColor(  );
+			changeColor(  );
 		}
 	}
 }
-
-function changeColor(id) {
-    document.getElementById(id).style.color = "green";
-    for (var i = 1; i < 4; i++) {
-	      for (var j = 1; j < 4; j++) {
-	      	document.getElementById(i+''+j).onclick='';
+//change box`s color and stopped listening for click
+function changeColor(fstID, sndID, trdID) {
+	if (endLoop != true) {
+	    document.getElementById(fstID).style.color = "green";
+	    document.getElementById(sndID).style.color = "green";
+	    document.getElementById(trdID).style.color = "green";
+	    for (var i = 1; i < 4; i++) {
+		      for (var j = 1; j < 4; j++) {
+		      	document.getElementById(i+''+j).onclick='';
+		     };
 	     };
-     };
+	     endLoop=true;
+ 	}
 }
 </script>
 	</div>
